@@ -6,12 +6,12 @@ public class Handler {
 
     private LinkedList<RenderedObject> object = new LinkedList<>();
 
-    void tick(){
+    public void tick(){
         for (RenderedObject tempObject : object) {
             tempObject.tick();
         }
     }
-    void render(Graphics g) {
+    public void render(Graphics g) {
         for (RenderedObject tempObject : object) {
             tempObject.render(g);
         }

@@ -11,22 +11,22 @@ public class Render extends Canvas implements Runnable {
     private Thread thread;
     private boolean isRunning = false;
     /////////// KONSTRUKTOR
-    private Render() {
+    public Render() {
         handler = new Handler();
         BufferedImgLoader loader = new BufferedImgLoader();
         loadqr = loader.loadMap("qrcode.png");
-        new Window(loadqr.getWidth()+50, loadqr.getHeight()+68, this);
+        new Window(loadqr.getWidth()+16, loadqr.getHeight()+39, this);
         loadLevelMap(loadqr);
         start();
 
     }
 
-    private void start(){
+    public void start(){
         isRunning = true;
         thread = new Thread(this);
         thread.start();
     }
-    private void stop(){
+    public void stop(){
         isRunning = false;
         try {
             thread.join();
@@ -55,25 +55,22 @@ public class Render extends Canvas implements Runnable {
                 tick();
                 unprocessed--;
             }
-
             render();
-
             frames++;
-
             if(System.currentTimeMillis() - timer > 1000){
                timer += 1000;
-                frames = 0;
+               frames = 0;
             }
       }
         stop();
     }
 
-    private void tick(){
+    public void tick(){
         handler.tick();
     }
 
     ///////////////////////////// WSZYSTKO CO RYSUJEMY ZNAJDUJE SIE W TEJ FUNKCJI
-    private void render()  {
+    public void render()  {
 
         BufferStrategy strat = this.getBufferStrategy();
 
@@ -86,8 +83,8 @@ public class Render extends Canvas implements Runnable {
 
         // rysujemy tutaj
 
-        for (int xx = 16; xx < loadqr.getWidth()+16 ; xx ++) {
-            for (int yy = 16; yy < loadqr.getHeight()+16 ; yy ++) {
+        for (int xx = 0; xx < loadqr.getWidth() ; xx ++) {
+            for (int yy = 0; yy < loadqr.getHeight() ; yy ++) {
                 g.setColor(Color.WHITE);
                 g.fillRect(xx,yy,1,1);
             }
@@ -95,7 +92,7 @@ public class Render extends Canvas implements Runnable {
 
         handler.render(g);
 
-        g.dispose();
+       // g.dispose();
         strat.show();
 
     }
@@ -104,9 +101,9 @@ public class Render extends Canvas implements Runnable {
         int w = image.getWidth();
         int h = image.getHeight();
 
-        for (int x = 16; x < w+16; x++) {
-            for (int y = 16; y < h+16; y++) {
-                int pixel = image.getRGB(x-16, y-16);
+        for (int x = 0; x < w; x++) {
+            for (int y = 0; y < h; y++) {
+                int pixel = image.getRGB(x, y);
                 int blue = (pixel) & 0xff;
                 int red = (pixel >> 16) & 0xff;
                 int green = (pixel >> 8) & 0xff;
